@@ -32,4 +32,4 @@ SSD：混合精度训练
 YOLOv5：带稀疏训练及剪枝
 
 ## Performance
-ASL Detection（YOLOv5）：FPS 55帧/秒左右，mAP@0.5:0.95 65%
+ASL Detection（YOLOv5）：FPS 55帧/秒左右，mAP@0.5:0.95 70%
