@@ -6,6 +6,9 @@ Python==3.8
 
 Pytorch==1.6.0
 
+前端：HTML+JS+CSS
+后端：Python Flask
+
 ## Datasets
 PASCAL VOC2012  
 
