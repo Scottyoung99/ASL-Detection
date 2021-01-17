@@ -1,0 +1,116 @@
+<style type="text/css">
+  .con4 {
+    width: 300px;
+    height: auto;
+    overflow: hidden;
+    margin: 20px auto;
+    color: #FFFFFF;
+  }
+  
+  .con4 .btn {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #d8b49c;
+    display: block;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  .upload {
+    float: left;
+    position: relative;
+  }
+  
+  .upload_pic {
+    display: block;
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    border-radius: 5px;
+  }
+  
+  #cvs {
+    border: 1px solid #000;
+    margin: 20px 0 20px 50px;
+  }
+</style>
+
+
+<script>
+  $(document).ready(function(){
+    $("#btn1").click(function(){
+      var formdata = new FormData();
+      formdata.append('object',$('#MODEL').val())
+      $("#IMAGE").attr("src","static/img/loading.gif");
+      $.ajax({
+        url:"video_request",
+        type:"POST",
+        data:formdata,
+        processData:false,
+        contentType:false,
+        success:function(d){
+          alert("successful!");
+          if(d=='1')  $("#IMAGE").attr("src","{{url_for('yolo_video_feed')}}");
+          if(d=='2')  $("#IMAGE").attr("src","{{url_for('cas_video_feed')}}");
+          if(d=='3')  $("#IMAGE").attr("src","{{url_for('ssd_video_feed')}}" );
+        },error:function(){
+          alert("打开摄像头失败")
+        }
+      })	
+    });
+
+    $("#btn2").click(function(){
+      var formdata = new FormData();
+      formdata.append('stp','1')
+      $.ajax({
+        url:"stop_video",
+        type:"POST",
+        data:formdata,
+        processData:false,
+        contentType:false,
+        success:function(d){
+          alert("successful!");
+          $("#IMAGE").attr("src","static/img/OIP.jpg");
+        },error:function(){
+          alert("打开摄像头失败")
+        }
+      })
+    });
+  });
+</script>
+
+<div class="container bg-light  text-center"  style=" border-radius:30px; margin:0 auto; padding-bottom: 20px;"> 
+    <div class="row" style=" margin:0 auto; padding-top: 20px;">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 bg-light">
+          <img src="static/img/cover.png" id="IMAGE" width='640' height='480' style="background-color:rgb(141, 103, 103); border-radius: 10px">
+        </div>
+    </div>  
+</div>
+
+<div style="display:inline-block;">
+    <select class="form-control" id="MODEL">
+      <option>yolov5</option>
+      <option>Cascade</option>
+      <option>SSD</option>
+      </select>
+</div>
+
+<div style="display:inline-block;">
+  <button id="btn1" class="btn btn-primary" > 
+  打开摄像头
+  </button>
+</div>
+
+<div style="display:inline-block;">
+  <button id="btn2" class="btn btn-primary" > 
+  关闭摄像头
+  </button>
+</div>
+
+    
+

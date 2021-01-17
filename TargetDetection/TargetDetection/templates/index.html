@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">   <%-- 在IE运行最新的渲染模式 --%> -->
+		<!--<meta name="viewport" content="width=device-width, initial-scale=1">   <%&#45;&#45; 初始化移动浏览显示 &#45;&#45;%>-->
+		<meta name="Author" content="Dreamer-1.">
+		
+		<!-- 引入各种CSS样式表 -->
+		<link rel="stylesheet" href="static/face/face.css">
+    	<link rel="stylesheet" href="static/css/fontawesome/fontawesome.css">
+    	<link rel="stylesheet" href="static/css/bootstrap-toggle.min.css">
+    	<link rel="stylesheet" href="static/css/fontawesome/solid.css" >
+		<link rel="stylesheet" href="../static/css/bootstrap.css">
+		<link rel="stylesheet" href="../static/css/font-awesome.css">
+		<link rel="stylesheet" href="../static/css/index.css">	<!-- 修改自Bootstrap官方Demon，你可以按自己的喜好制定CSS样式 -->
+		<link rel="stylesheet" href="../static/css/font-change.css">	<!-- 将默认字体从宋体换成微软雅黑（个人比较喜欢微软雅黑，移动端和桌面端显示效果比较接近） -->
+		
+		<script type="text/javascript" src="../static/js/jquery-1.12.3.min.js"></script>
+		<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+	
+		<title>- TargetDetection -</title>
+
+	</head>
+	
+	<body>
+	<!-- 顶部菜单（来自bootstrap官方Demon）==================================== -->
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+      		<div class="container">
+        		<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" >
+		            	<span class="sr-only">Toggle navigation</span>
+		            	<span class="icon-bar"></span>
+		            	<span class="icon-bar"></span>
+		            	<span class="icon-bar"></span>
+					</button>
+	          		<a class="navbar-brand" href="###">主页</a>
+        		</div>
+        		
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">			            
+						<li><a href="###" onclick="showAtRight('/user/list')"><i class="fa fa-users"></i> 主页介绍</a></li>
+						<li><a href="###" onclick="showAtRight('/product/list')"><i class="fa fa-list-alt"></i> 手语检测</a></li>
+						<li><a href="###" onclick="showAtRight('/record/list')" ><i class="fa fa-list"></i> 普通物体检测</a></li>
+					</ul>
+          			
+        		</div>
+      		</div>
+    	</nav>
+
+	<!-- 左侧菜单选项========================================= -->
+		<div class="container-fluid">
+			<div class="row-fluie">
+				<div class="col-sm-3 col-md-2 sidebar">		
+					<ul class="nav nav-sidebar">
+						<!-- 一级菜单 -->
+						<li class="active"><a href="#userMeun" class="nav-header menu-first collapsed" data-toggle="collapse">
+							<i class="fa fa-user"></i>&nbsp; 主页介绍 <span class="sr-only">(current)</span></a>
+						</li> 
+						<!-- 二级菜单 -->
+						<!-- 注意一级菜单中<a>标签内的href="#……"里面的内容要与二级菜单中<ul>标签内的id="……"里面的内容一致 -->
+						<!-- <ul id="userMeun" class="nav nav-list collapse menu-second">
+							<li><a href="###" onclick="showAtRight('/user/list')"><i class="fa fa-users"></i> 介绍</a></li>
+						</ul> -->
+						
+						<li><a href="#recordMeun" class="nav-header menu-first collapsed" data-toggle="collapse">
+							<i class="fa fa-file-text"></i>&nbsp; 普通物体检测 <span class="sr-only">(current)</span></a>
+						</li> 
+						<ul id="recordMeun" class="nav nav-list collapse menu-second">
+							<li><a href="###" onclick="showAtRight('/record/list')" ><i class="fa fa-list"></i> 图片</a></li>
+						</ul>
+
+						<li><a href="#productMeun" class="nav-header menu-first collapsed" data-toggle="collapse">
+							<i class="fa fa-globe"></i>&nbsp; 手语检测 <span class="sr-only">(current)</span></a>
+						</li> 
+						<ul id="productMeun" class="nav nav-list collapse menu-second">
+							<li><a href="###" onclick="showAtRight('/product/list')"><i class="fa fa-list-alt"></i> 实时检测</a></li>
+						</ul>
+							
+					</ul>
+					
+				</div>
+			</div>
+		</div>
+
+<!-- 右侧内容展示==================================================   -->   		
+ 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+					<h1 class="page-header"><i class="fa fa-cog fa-spin"></i>&nbsp;<small>&nbsp;&nbsp;&nbsp;欢迎使用目标检测系统</small></h1>
+						
+						<!-- 载入左侧菜单指向的jsp（或html等）页面内容 -->
+          				<div id="content">
+       						<h4>    				
+   								<strong>TargetDetection</strong><br>
+								   <br><br>
+								   <p>Faster_Rcnn:
+									虽然是2015年的论文, 但它至今仍是许多目标检测算法的基础，这在日新月异的深度学习领域十分难得。Faster R-CNN还被应用到更多的领域中, 比如人体关键点检测、目标追踪、 实例分割还有图像描述等。
+									</p>
+									<p>Cascade:
+									Cascade R-CNN算法是CVPR2018的文章，通过级联几个检测网络达到不断优化预测结果的目的，与普通级联不同的是，cascade R-CNN的几个检测网络是基于不同IOU阈值确定的正负样本上训练得到的，这是该算法的一大亮点。
+									</p>
+									<p>Mask:
+									Mask R-CNN是一个实例分割（Instance segmentation）算法，通过增加不同的分支，可以完成目标分类、目标检测、语义分割、实例分割、人体姿势识别等多种任务，灵活而强大。
+									</p>
+									<p>SSD:
+									SSD:基于多尺度特征的Proposal，SSD达到了效率与效果的平衡，从运算速度上来看，能达到接近实时的表现，从效果上看，要比YOLO更好。
+									</p>
+									<p>Yolo v5:
+									Yolo v5:YOLO将物体检测作为回归问题求解。基于一个单独的end-to-end网络，完成从原始图像的输入到物体位置和类别的输出。
+									</p>
+       						</h4>         						
+          				</div>  
+				</div> 
+		
+		
+		<script type="text/javascript">
+			function showAtRight(url){
+				$.ajax({
+                    type :"GET",
+                    url : url,
+                    dataType:"html",
+                    success : function(data) {//返回数据根据结果进行相应的处理
+                        $("#content").html(data);
+                    },
+					error:function(){
+						$("#content").html("获取数据失败！");
+					}
+                });
+			}
+		</script>
+	
+	</body>
+</html>

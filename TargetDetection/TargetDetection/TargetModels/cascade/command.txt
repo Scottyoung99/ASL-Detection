@@ -1,0 +1,39 @@
+#VS2015
+conda create -n detectron2 python=3.7
+conda activate detectron2
+conda install pytorch=1.4 torchvision cudatoolkit=10.1 -c pytorch
+
+1、pip install cython opencv-python pillow  matplotlib termcolor cloudpickle tabulate tensorboard termcolor tqdm yacs mock fvcore pydot wheel futrue
+
+2、安装pycocotools
+   cd cocoapi/PythonAPI
+   python setup.py build_ext install
+ 
+3、D:\ProgramData\Anaconda3\envs\detectron2\Lib\site-packages\torch\include\torch\csrc\jit\argument_spec.h
+static constexpr size_t DEPTH_LIMIT = 128; -->  static const size_t DEPTH_LIMIT = 128;
+
+4、D:\ProgramData\Anaconda3\envs\detectron2\Lib\site-packages\torch\include\pybind11\cast.h(line 1449)
+explicit operator type&() { return *(this->value); } -->  explicit operator type&() { return ((type)this->value); }
+
+5、D:\ProgramData\Anaconda3\envs\detectron2\Lib\site-packages\torch\utils\cpp_extension.py
+match = re.search(r'(\d+)\.(\d+)\.(\d+)', compiler_info.decode("utf8","ignore").strip())
+
+6、D:\ProgramData\Anaconda3\envs\detectron2\Lib\site-packages\torch\include\c10\util 替换
+flat_hash_map.h
+order_preserving_flat_hash_map.h
+variant.h
+
+7、python setup.py build develop
+
+8、python demo/demo.py --config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml --input 1.jpg  --opts MODEL.WEIGHTS model_final_a54504.pkl
+python demo/demo.py --config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml --webcam  --opts MODEL.WEIGHTS model_final_a54504.pkl
+
+
+python demo/demo.py --config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml --video-input 1.mp4  --output maskrcnn_video.mp4  --opts MODEL.WEIGHTS checkpoints/model_final_a54504.pkl
+python demo/demo.py --config-file configs/COCO-Keypoints/keypoint_rcnn_R_50_FPN_3x.yaml --video-input lsig.mp4  --output keypoint_video.mp4  --opts MODEL.WEIGHTS checkpoints/model_final_a6e10b.pkl
+
+
+#训练Mask-RCNN
+1、准备coco数据集
+2、修改changemaskrcnn.py，运行
+3、修改TrainAndPredict.py，运行

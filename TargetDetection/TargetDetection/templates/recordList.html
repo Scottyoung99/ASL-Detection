@@ -1,0 +1,210 @@
+<style type="text/css">
+	.con4 {
+		width: 300px;
+		height: auto;
+		overflow: hidden;
+		margin: 20px auto;
+		color: #FFFFFF;
+	}
+	
+	.con4 .btn {
+		width: 100%;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+		background: #d8b49c;
+		display: block;
+		font-size: 16px;
+		border-radius: 5px;
+	}
+	
+	.upload {
+		float: left;
+		position: relative;
+	}
+	
+	.upload_pic {
+		display: block;
+		width: 100%;
+		height: 40px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		opacity: 0;
+		border-radius: 5px;
+	}
+	
+	#cvs {
+		border: 1px solid #000;
+		margin: 20px 0 20px 50px;
+	}
+</style>
+
+<script>
+	$(document).ready(function(){
+		$("#btn1").click(function(){
+			var formdata = new FormData();
+			formdata.append('file',$('#upload')[0].files[0]);
+			formdata.append('object',$("#object").val());
+			formdata.append('mdl',$("#MODEL").val());
+			$.ajax({
+				url:"/pred",
+				type:"POST",
+				data:formdata,
+				processData:false,
+				contentType:false,
+				success:function(d){
+					$("#IMAGE").attr("src",d.name);
+					$("#TIME").html(d.Time)
+					$("#MAP").html(d.Map)
+					if(d.flag==1){
+						alert("successful!")
+					}
+					else{
+						alert("图片中没有该物体！请重新输入")
+					}
+				},error:function(){
+					alert("检测失败")
+				}
+			})	
+		});
+	});
+</script>
+
+<div class="container bg-light  text-center"  style=" border-radius:30px; margin:0 auto; padding-bottom: 20px;"> 
+	<div class="row" style=" margin:0 auto; padding-top: 20px;">
+		<div class="col-9 col-sm-9 col-md-9 col-lg-9 bg-light">
+			<canvas id="cvs" style="background-color:rgb(141, 103, 103); border-radius: 10px"  width='700' height='450'></canvas>
+		</div>
+		 <div class="col-3 col-sm-3 col-md-3 col-lg-3"  style=" border-radius: 10px; color: 555;">
+			<!-- <div style="margin-top:25%; height:12%; display:flex; align-items: center; justify-content: center;">
+					<select class="form-control" id="MODEL">
+						<option>Faster_Rcnn</option>
+						<option>Mask</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					  </select>
+			</div> -->
+			<div class="row text-center" style="margin-top:15%; height:12%; display:flex; align-items: center; justify-content: center ">
+				<div style="text-align:center; margin:0 auto; width:70%">
+					<select class="form-control" id="MODEL">
+						<option>Faster_Rcnn</option>
+						<option>Mask</option>
+						<option>yolov5</option>
+						<option>Cascade</option>
+						<option>SSD</option>
+					  </select>
+				</div>
+			</div>
+
+
+			<!-- <div class="input-group">
+				<input type="text"  class="form-control" id='object' placeholder="请输入检测物体">
+			</div> -->
+			<div class="row text-center" style="margin-top:15%; height:12%; display:flex; align-items: center; justify-content: center ">
+				<div style="text-align:center; margin:0 auto; width:70%">
+					<input type="text"  class="form-control" id='object' placeholder="请输入检测物体">
+				</div>
+			</div>
+
+			<div class="row text-center" style="margin-top:15%; height:12%; display:flex; align-items: center; justify-content: center ">
+				<div style="text-align:center; margin:0 auto; width:70%">
+					<button class="btn btn-default btn-block btn-font" style="margin: 0 auto; background-color: inherit" data-toggle="modal" data-target="#staticBackdrop">
+						<!-- <i class="fas fa-file-download fa-2x" style="display: block; color:dodgerblue;" ></i>  -->
+						<span class="text-white">显示结果图片</span>
+					</button>
+				</div>
+			</div>
+			
+			<div class="row text-center" style="margin-top:15%; height:12%; display:flex; align-items: center; justify-content: center ">
+				<div style="text-align:center; margin:0 auto; width:70%">
+					<button id="btn1" class="btn btn-primary" > 
+						开始检测
+					</button>
+				</div>
+			</div>
+
+			<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">								
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">结果</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						</div>
+						<div class="modal-body">
+							<img src="static/img/OIP.jpg" id="IMAGE" class="aligncenter" width=auto height="400px">
+							<div class="col-9">
+								time : <label style="line-height: 25px;" class="aligncenter" id=TIME> </label> 
+							</div>
+							<div class="col-3">
+								Map : <label  style="line-height: 25px;" class="aligncenter" id="MAP"> </label> 
+							</div>
+						</div>
+						<div class="modal-footer">
+						<button  class="btn btn-secondary" data-dismiss="modal" >Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> 
+	</div>  
+</div>
+  
+
+<div class="row" id="foreground_images" style="width:90%; margin:0 auto; margin-top:10px; padding-top: 10px; background-color:#33CC99; border-radius:15px" >
+	<div style="text-align:center; margin:0 auto; width:90%">
+		<span class="btn upload" style="margin: 0 auto; background-color: inherit">选择文件<input type="file" class="upload_pic" id="upload" /></span>
+	</div>        
+</div>
+
+
+<script>
+	//获取上传按钮
+	var input1 = document.getElementById("upload");
+	if(typeof FileReader === 'undefined') {
+		//result.innerHTML = "抱歉，你的浏览器不支持 FileReader"; 
+		input1.setAttribute('disabled', 'disabled');
+	} else {
+		input1.addEventListener('change', readFile, false);
+
+	}
+
+	function readFile() {
+		var file = this.files[0]; //获取上传文件列表中第一个文件
+		if(!/image\/\w+/.test(file.type)) {
+			//图片文件的type值为image/png或image/jpg
+			alert("文件必须为图片！");
+			return false;
+		}
+		// console.log(file);
+		var reader = new FileReader(); //实例一个文件对象
+		reader.readAsDataURL(file); //把上传的文件转换成url
+		//当文件读取成功便可以调取上传的接口
+		reader.onload = function(e) {
+
+			var image = new Image();
+			// 设置src属性 
+			image.src = e.target.result;
+			var max = 800;
+			// 绑定load事件处理器，加载完成后执行，避免同步问题
+			image.onload = function() {
+				// 获取 canvas DOM 对象 
+				var canvas = document.getElementById("cvs");
+				// 获取 canvas的 2d 环境对象, 
+				var ctx = canvas.getContext("2d");
+				// canvas清屏 
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				//长，高
+				h = image.height
+				w = image.width/h*canvas.height
+				
+				ww = Math.abs(canvas.width-w)/2
+				hh = Math.abs(canvas.height-h)/2
+				ctx.drawImage(image, ww, 0, w, canvas.height);
+			};
+		}
+	};
+</script>

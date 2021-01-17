@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>目标检测</title>
+
+<link href="static/head/cropper.min.css" rel="stylesheet">
+<link href="static/head/sitelogo.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="static/css/font-awesome.min.css">
+<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="static/head/cropper.js"></script>
+<script src="static/head/sitelogo.js"></script>
+<style type="text/css">
+	.avatar-btns button {
+		height: 35px;
+		color: rgb(248, 244, 244);
+	}
+	body{
+			background-color: #e6f2f5
+		}
+	.aligncenter {
+		clear: both;
+		display: block;
+		margin: auto;
+	}
+</style>
+<script>
+	$(document).ready(function(){
+		$("#btn1").click(function(){
+			var formdata = new FormData();
+			formdata.append('file',$("#avatarInput")[0].files[0]);
+			formdata.append('object',$("#object").val())
+			$.ajax({
+				url:"/pred",
+				type:"POST",
+				data:formdata,
+				processData:false,
+                contentType:false,
+				success:function(d){
+					$("#IMAGE").attr("src",d.name);
+					$("#TIME").html(d.Time)
+					$("#MAP").html(d.Map)
+					if(d.flag==1){
+						alert("successful!")
+					}
+					else{
+						alert("图片中没有该物体！请重新输入")
+					}
+				},error:function(){
+					alert("检测失败")
+				}
+			})	
+		});
+	});
+</script>
+</head>
+
+
+<body>
+
+<div class="user_pic" style="margin: 10px;">
+	<img src="">
+</div>
+<div class="container bg-light  text-center" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1" >
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" >
+			<form class="avatar-form" id="formimage"  target="nm_iframe" > 
+				<div class="modal-body">
+					<div class="avatar-body">
+						<div class="row" style=" margin:0 auto; padding-top: 20px;">
+							<div class="col-9 col-sm-9 col-md-9 col-lg-9 bg-light" >
+								<div class="avatar-wrapper" ></div>
+							</div>
+							<div class="col-3 col-sm-3 col-md-3 col-lg-3 bg-dark"  style=" border-radius: 10px;"></div>
+							
+						
+						<div class="row avatar-btns" >
+							<div class="avatar-upload">
+								<button class="btn btn-primary"  type="button"  onClick="$('input[id=avatarInput]').click();">请选择图片</button>
+								<span id="avatar-name"></span>
+								<input class="avatar-input hide" id="avatarInput" name="avatar_file" type="file">
+							</div>
+								<div class="dropdown">
+									<a class="btn btn-primary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									  选择场景
+									</a>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+									  <a class="dropdown-item" href="#">Action</a>
+									  <a class="dropdown-item" href="#">Another action</a>
+									  <a class="dropdown-item" href="#">Something else here</a>
+									</div>
+								</div>
+
+								<div class="dropdown">
+									<a class="btn btn-primary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									  选择算法
+									</a>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+									  <a class="dropdown-item" href="#">Action</a>
+									  <a class="dropdown-item" href="#">Another action</a>
+									  <a class="dropdown-item" href="#">Something else here</a>
+									</div>
+								</div>
+								<div class="input-group">
+									<input type="text"  class="form-control" id='object' placeholder="请输入检测物体">
+								</div>
+								<button id="btn1" class="btn btn-primary" > 
+									开始检测
+								</button>
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+									显示结果图片
+								</button>
+							<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">								
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+										<h5 class="modal-title" id="staticBackdropLabel">结果</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										</div>
+										<div class="modal-body">
+											<img src="static/img/OIP.jpg" id="IMAGE" class="aligncenter" width=auto height="400px">
+											<div class="col-md-6">
+												time : <label style="line-height: 25px;" class="aligncenter" id=TIME> </label> 
+											</div>
+											<div class="col-md-6">
+												Map : <label  style="line-height: 25px;" class="aligncenter" id="MAP"> </label> 
+											</div>
+										</div>
+										<div class="modal-footer">
+										<button  class="btn btn-secondary" data-dismiss="modal" >Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe> 
+</body>
+</html>

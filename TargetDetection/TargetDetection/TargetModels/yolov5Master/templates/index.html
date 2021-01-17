@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>TargetDetection</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+ 
+    <link rel="stylesheet" href="static/face/face.css">
+    <link rel="stylesheet" href="static/css/fontawesome/fontawesome.css">
+    <link rel="stylesheet" href="static/css/bootstrap-toggle.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome/solid.css" >
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .con4 {
+            width: 300px;
+            height: auto;
+            overflow: hidden;
+            margin: 20px auto;
+            color: #FFFFFF;
+        }
+        
+        .con4 .btn {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: #d8b49c;
+            display: block;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        
+        .upload {
+            float: left;
+            position: relative;
+        }
+        
+        .upload_pic {
+            display: block;
+            width: 100%;
+            height: 40px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            border-radius: 5px;
+        }
+        
+        #cvs {
+            border: 1px solid #000;
+            margin: 20px 0 20px 50px;
+        }
+    </style>
+    
+    <script>
+        $(document).ready(function(){
+            $("#btn1").click(function(){
+                var formdata = new FormData();
+                formdata.append('object','0')
+                $.ajax({
+                    url:"video_request",
+                    type:"POST",
+                    data:formdata,
+                    processData:false,
+                    contentType:false,
+                    success:function(d){
+                      if(d=='1') alert("successful!")
+                        $("#IMAGE").attr("src","{{ url_for('video_feed') }}");
+                    },error:function(){
+                        alert("打开摄像头失败")
+                    }
+                })	
+            });
+        });
+    </script>
+  </head>
+
+
+<body>
+    <header id="header"> 
+      <!-- header部分的内容使用配置文件配置 -->
+    </header>
+    
+<main role="main" class="container" id="avatar-modal" >
+    <div class="starter-template">
+        <h1 id="h_title">手语检测</h1>
+        <div class="alert alert-warning d-block d-md-none"><small>推荐使用电脑浏览器访问本网页，深度学习模型在iPhone和安卓手机上通常运行不快。</small></div>
+        <div class="alert alert-warning d-block d-md-none"><small>如果您使用的iOS设备，推荐使用safari浏览器，因为其他浏览器获取不了摄像头录制视频权限。</small></div>
+    </div>
+
+    <div class="container bg-light  text-center"  style=" border-radius:30px; margin:0 auto; padding-bottom: 20px;"> 
+        <div class="row" style=" margin:0 auto; padding-top: 20px;">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 bg-light">
+              <img src="" id="IMAGE" width='640' height='480' style="background-color:rgb(141, 103, 103); border-radius: 10px">
+            </div>
+        </div>  
+    </div>
+
+    <button id="btn1" class="btn btn-primary" > 
+      打开摄像头
+    </button>
+      
+</main>
+</body>
+</html>
